@@ -24,10 +24,6 @@
 #include "filesystem.h"
 #include "matsys_controls/matsyscontrols.h"
 
-#ifdef SIXENSE
-#include "sixense/in_sixense.h"
-#endif
-
 using namespace vgui;
 
 void MP3Player_Create( vgui::VPANEL parent );
@@ -212,9 +208,6 @@ void VGui_CreateGlobalPanels( void )
 #ifndef _X360
 	// Create mp3 player off of tool parent panel
 	MP3Player_Create( toolParent );
-#endif
-#ifdef SIXENSE
-	g_pSixenseInput->CreateGUI( gameToolParent );
 #endif
 }
 

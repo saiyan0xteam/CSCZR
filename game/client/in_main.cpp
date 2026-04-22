@@ -26,10 +26,6 @@
 #include <voice_status.h>
 #include "cam_thirdperson.h"
 
-#ifdef SIXENSE
-#include "sixense/in_sixense.h"
-#endif
-
 #include "client_virtualreality.h"
 #include "sourcevr/isourcevirtualreality.h"
 
@@ -1031,33 +1027,11 @@ void CInput::ExtraMouseSample( float frametime, bool active )
 
 		// Allow mice and other controllers to add their inputs
 		ControllerMove( frametime, cmd );
-#ifdef SIXENSE
-		g_pSixenseInput->SixenseFrame( frametime, cmd ); 
-
-		if( g_pSixenseInput->IsEnabled() )
-		{
-			g_pSixenseInput->SetView( frametime, cmd );
-		}
-#endif
 	}
 
 	// Retreive view angles from engine ( could have been set in IN_AdjustAngles above )
 	engine->GetViewAngles( viewangles );
-
-	// Set button and flag bits, don't blow away state
-#ifdef SIXENSE
-	if( g_pSixenseInput->IsEnabled() )
-	{
-		// Some buttons were set in SixenseUpdateKeys, so or in any real keypresses
-		cmd->buttons |= GetButtonBits( 0 );
-	}
-	else
-	{
-		cmd->buttons = GetButtonBits( 0 );
-	}
-#else
 	cmd->buttons = GetButtonBits( 0 );
-#endif
 
 	// Use new view angles if alive, otherwise user last angles we stored off.
 	if ( g_iAlive )
@@ -1140,14 +1114,6 @@ void CInput::CreateMove ( int sequence_number, float input_sample_frametime, boo
 
 		// Allow mice and other controllers to add their inputs
 		ControllerMove( input_sample_frametime, cmd );
-#ifdef SIXENSE
-		g_pSixenseInput->SixenseFrame( input_sample_frametime, cmd ); 
-
-		if( g_pSixenseInput->IsEnabled() )
-		{
-			g_pSixenseInput->SetView( input_sample_frametime, cmd );
-		}
-#endif
 	}
 	else
 	{
@@ -1178,28 +1144,9 @@ void CInput::CreateMove ( int sequence_number, float input_sample_frametime, boo
 		m_hSelectedWeapon = NULL;
 	}
 
-	// Set button and flag bits
-#ifdef SIXENSE
-	if( g_pSixenseInput->IsEnabled() )
-	{
-		// Some buttons were set in SixenseUpdateKeys, so or in any real keypresses
-		cmd->buttons |= GetButtonBits( 1 );
-	}
-	else
-	{
-		cmd->buttons = GetButtonBits( 1 );
-	}
-#else
-	// Set button and flag bits
 	cmd->buttons = GetButtonBits( 1 );
-#endif
 
-	// Using joystick?
-#ifdef SIXENSE
-	if ( in_joystick.GetInt() || g_pSixenseInput->IsEnabled() )
-#else
 	if ( in_joystick.GetInt() )
-#endif
 	{
 		if ( cmd->forwardmove > 0 )
 		{
@@ -1225,17 +1172,7 @@ void CInput::CreateMove ( int sequence_number, float input_sample_frametime, boo
 	// Let the move manager override anything it wants to.
 	if ( g_pClientMode->CreateMove( input_sample_frametime, cmd ) )
 	{
-		// Get current view angles after the client mode tweaks with it
-#ifdef SIXENSE
-		// Only set the engine angles if sixense is not enabled. It is done in SixenseInput::SetView otherwise.
-		if( !g_pSixenseInput->IsEnabled() )
-		{
-			engine->SetViewAngles( cmd->viewangles );
-		}
-#else
 		engine->SetViewAngles( cmd->viewangles );
-
-#endif
 
 		if ( UseVR() )
 		{

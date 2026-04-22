@@ -6,3 +6,5 @@ _vpc_/
 *.dll
 *.pdb
 .ccache/
+.ninja_deps
+.ninja_log

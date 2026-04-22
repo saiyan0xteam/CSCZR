@@ -53,7 +53,7 @@ $Configuration
 
 	$Compiler
 	{
-		$AdditionalIncludeDirectories	".\;$BASE;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\game\shared;.\game_controls;$SRCDIR\thirdparty\sixensesdk\include"
+		$AdditionalIncludeDirectories	".\;$BASE;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\game\shared;.\game_controls"
 		$PreprocessorDefinitions		"$BASE;NO_STRING_T;CLIENT_DLL;VECTOR;VERSION_SAFE_STEAM_API_INTERFACES;PROTECTED_THINGS_ENABLE;strncpy=use_Q_strncpy_instead;_snprintf=use_Q_snprintf_instead" 
 		$PreprocessorDefinitions		"$BASE;INCLUDED_STEAM2_USERID_STRUCTS" 
 		$PreprocessorDefinitions		"$BASE;fopen=dont_use_fopen" [$WIN32]
@@ -515,17 +515,6 @@ $Project
 		$File	"$SRCDIR\public\haptics\haptic_utils.cpp"	[$WINDOWS&&!$X360]
 
 		$File	"$SRCDIR\game\shared\secure_command_line.cpp"
-
-
-		$Folder	"Sixense"
-		{
-			$File	"sixense\in_sixense.cpp"
-			$File	"sixense\in_sixense.h"
-			$File	"sixense\in_sixense_gesture_bindings.cpp"
-			$File	"sixense\in_sixense_gesture_bindings.h"
-			$File	"$SRCDIR\game\shared\sixense\sixense_convars.cpp"
-			$File	"$SRCDIR\game\shared\sixense\sixense_convars_extern.h"
-		}
 		
 		// Files not using precompiled header cbase.h
 
