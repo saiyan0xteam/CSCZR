@@ -1,0 +1,8 @@
+bin/
+_vpc_/
+*.o
+*.so
+*.obj
+*.dll
+*.pdb
+.ccache/
