@@ -28,10 +28,6 @@
 #include "rumble_shared.h"
 #include "gamestats.h"
 
-#ifdef PORTAL
-	#include "portal_util_shared.h"
-#endif
-
 #ifdef HL2_DLL
 	extern int g_interactionPlayerLaunchedRPG;
 #endif
@@ -1938,16 +1934,7 @@ void CWeaponRPG::UpdateLaserPosition( Vector vecMuzzlePos, Vector vecEndPos )
 	//Move the laser dot, if active
 	trace_t	tr;
 	
-	// Trace out for the endpoint
-#ifdef PORTAL
-	g_bBulletPortalTrace = true;
-	Ray_t rayLaser;
-	rayLaser.Init( vecMuzzlePos, vecEndPos );
-	UTIL_Portal_TraceRay( rayLaser, (MASK_SHOT & ~CONTENTS_WINDOW), this, COLLISION_GROUP_NONE, &tr );
-	g_bBulletPortalTrace = false;
-#else
 	UTIL_TraceLine( vecMuzzlePos, vecEndPos, (MASK_SHOT & ~CONTENTS_WINDOW), this, COLLISION_GROUP_NONE, &tr );
-#endif
 
 	// Move the laser sprite
 	if ( m_hLaserDot != NULL )
@@ -2137,10 +2124,6 @@ void CWeaponRPG::StartLaserEffects( void )
 		m_hLaserBeam->SetEndWidth( 0.5f );
 		m_hLaserBeam->SetBrightness( 128 );
 		m_hLaserBeam->SetBeamFlags( SF_BEAM_SHADEIN );
-#ifdef PORTAL
-		m_hLaserBeam->m_bDrawInMainRender = true;
-		m_hLaserBeam->m_bDrawInPortalRender = false;
-#endif
 	}
 	else
 	{
@@ -2157,11 +2140,6 @@ void CWeaponRPG::StartLaserEffects( void )
 			Assert(0);
 			return;
 		}
-
-#ifdef PORTAL
-		m_hLaserMuzzleSprite->m_bDrawInMainRender = true;
-		m_hLaserMuzzleSprite->m_bDrawInPortalRender = false;
-#endif
 
 		m_hLaserMuzzleSprite->SetAttachment( pOwner->GetViewModel(), LookupAttachment( "laser" ) );
 		m_hLaserMuzzleSprite->SetTransparency( kRenderTransAdd, 255, 255, 255, 255, kRenderFxNoDissipation );

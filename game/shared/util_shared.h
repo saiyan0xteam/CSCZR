@@ -23,10 +23,6 @@
 #include "cdll_client_int.h"
 #endif
 
-#ifdef PORTAL
-#include "portal_util_shared.h"
-#endif
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------

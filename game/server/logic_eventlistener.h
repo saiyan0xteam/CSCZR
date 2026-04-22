@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2008, Valve Corporation, All rights reserved. ====
+//========= Copyright ï¿½ 1996-2008, Valve Corporation, All rights reserved. ====
 //
 // Purpose:
 //
@@ -20,9 +20,6 @@ class CLogicEventListener : public CLogicalEntity, public CGameEventListener
 
 public:
 	// FIXME: Subclass
-#ifdef PORTAL2
-#endif // PORTAL2
-
 	virtual void Spawn( void );
 	virtual void FireGameEvent( IGameEvent *event );
 	

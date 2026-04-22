@@ -339,7 +339,7 @@ void CEmbeddedItemModelPanel::SetItem( CEconItemView *pItem )
 			if ( pszModelName )
 			{
 				CMDL *pMDL = NULL;
-#ifndef PORTAL2 // DOTA COME BACK
+
 				if ( m_bUsePedestal )
 				{
 					MDLHandle_t hPedestalMDL = mdlcache->FindMDL( "models/weapons/pedestal/pedestal.mdl" ); 
@@ -364,7 +364,6 @@ void CEmbeddedItemModelPanel::SetItem( CEconItemView *pItem )
 
 					pMDL = &m_RootMDL.m_MDL;
 				}
-#endif
 
 				if ( pMDL )
 				{

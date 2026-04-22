@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2008, Valve Corporation, All rights reserved. ====
+//========= Copyright ï¿½ 1996-2008, Valve Corporation, All rights reserved. ====
 //
 // Purpose:		Player for HL2.
 //
@@ -8,9 +8,6 @@
 #include "logic_eventlistener.h"
 #include "GameEventListener.h"
 #include "igameevents.h"
-#ifdef PORTAL2
-#include "portal_mp_gamerules.h"
-#endif // PORTAL2
 
 LINK_ENTITY_TO_CLASS( logic_eventlistener, CLogicEventListener);
 

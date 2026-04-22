@@ -267,9 +267,6 @@ IMPLEMENT_SERVERCLASS_ST(CBaseAnimating, DT_BaseAnimating)
 END_SEND_TABLE()
 
 BEGIN_ENT_SCRIPTDESC( CBaseAnimating, CBaseEntity, "Animating models" )
-	#ifdef PORTAL2
-	DEFINE_SCRIPTFUNC( GetObjectScaleLevel, "The scale size of the entity" )
-	#endif // PORTAL2
 	DEFINE_SCRIPTFUNC( LookupAttachment, "Get the named attachement id"  )
 	DEFINE_SCRIPTFUNC( GetAttachmentBone, "Get the named attachement's parent bone index"  )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoneOrigin, "GetBoneOrigin", "Get the bone id's origin vector"  )

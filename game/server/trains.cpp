@@ -2552,19 +2552,13 @@ void CFuncTrackTrain::Find( void )
 	if ( !m_ppath )
 		return;
 
-	if ( !FClassnameIs( m_ppath, "path_track" ) 
-#ifndef PORTAL	//env_portal_path_track is a child of path_track and would like to get found
-		 && !FClassnameIs( m_ppath, "env_portal_path_track" )
-#endif //#ifndef PORTAL
-		)
+	if (!FClassnameIs( m_ppath, "path_track" ) && !FClassnameIs( m_ppath, "env_portal_path_track" ))
 	{
 		Warning( "func_track_train must be on a path of path_track\n" );
 		Assert(0);
 		m_ppath = NULL;
 		return;
 	}
-
-
 
 	Vector nextPos = m_ppath->GetLocalOrigin();
 	Vector look = nextPos;
