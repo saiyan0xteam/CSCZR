@@ -2217,8 +2217,6 @@ BEGIN_ENT_SCRIPTDESC_ROOT( CBaseEntity, "Root class of all server-side entities"
 
 	DEFINE_SCRIPTFUNC_NAMED( ScriptPrecacheModel, "PrecacheModel", "" )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptPrecacheScriptSound, "PrecacheScriptSound", "" )
-	// dota had a SetModel here too, but i dont think we need it
-
 	DEFINE_SCRIPTFUNC_NAMED( ScriptEmitSound, "EmitSound", "Plays a sound from this entity." )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptStopSound, "StopSound", "Stops a sound on this entity." )
 	DEFINE_SCRIPTFUNC_NAMED( VScriptPrecacheScriptSound, "PrecacheSoundScript", "Precache a sound for later playing." )
@@ -5566,23 +5564,7 @@ void CC_Ent_Call( const CCommand& args )
                 }
                 else
                 {
-#ifdef TERROR
-                    hFunc = TheDirector->GetScriptScope( CDirector::CHALLENGE_SCRIPT )->LookupFunction( args[1] );
-                    // @TODO: why does this not work... it "should" be identical to the call above that does work, right?
-                    // hFunc = g_pScriptVM->LookupFunction( args[1], HSCRIPT(TheDirector->GetScriptScope( CDirector::CHALLENGE_SCRIPT )));
-                    if ( hFunc )
-                        TheDirector->GetScriptScope( CDirector::CHALLENGE_SCRIPT )->Call( hFunc, &rval, ToHScript(pEntity) );
-                    else
-                    {
-                        hFunc = TheDirector->GetScriptScope( CDirector::MAP_SCRIPT )->LookupFunction( args[1] );
-                        if ( hFunc )
-                            TheDirector->GetScriptScope( CDirector::MAP_SCRIPT )->Call( hFunc, &rval, ToHScript(pEntity) );
-                        else
-                            Warning("Couldn't find function %s anywhere!\n", args[1]);
-                    }
-#else
 					Warning("Couldn't find function %s anywhere!\n", args[1]);
-#endif
                 }
             }
         }

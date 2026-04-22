@@ -27,10 +27,6 @@
 #include "igameevents.h"
 #endif
 
-#if defined (DOTA_CLIENT_DLL) || defined (DOTA_DLL)
-	#include "econ/dota_item_system.h"
-#endif // defined (DOTA_CLIENT_DLL) || defined (DOTA_DLL)
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 

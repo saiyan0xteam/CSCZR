@@ -34,10 +34,6 @@
 #include "vscript_server_nut.h"
 #endif
 
-#ifdef DOTA_DLL
-#include "dota_animation.h"
-#endif
-
 extern ScriptClassDesc_t * GetScriptDesc( CBaseEntity * );
 
 extern CServerGameDLL g_ServerGameDLL;
@@ -1257,10 +1253,6 @@ CBaseEntity *ScriptCreateEntityFromTable( const char *pszClassname, HSCRIPT hSpa
 		return NULL;
 
 	CBaseEntity *pEntity = VScript_ParseEntity( pszClassname, hSpawnTable );
-
-#ifdef TERROR
-	TheDirector->GetChallengeMode()->RecordScriptSpawnedEntity( pEntity );
-#endif
 
 	return pEntity;
 }

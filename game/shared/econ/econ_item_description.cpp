@@ -1637,24 +1637,6 @@ void CEconItemDescription::Generate_Bundle( const CLocalizationProvider *pLocali
 		if ( !pBundleItemDef )
 			continue;
 
-		// If the current item is part of a pack bundle, add the pack bundle to the description, rather than the individual item
-#ifdef DOTA
-		if ( pBundleItemDef->IsPackItem() )
-		{
-			const CUtlVector< CEconItemDefinition * > &vecPackBundleItemDefs = pBundleItemDef->GetOwningPackBundles();
-
-			item_definition_index_t usPackBundleItemDefIndex = vecPackBundleItemDefs[i]->GetDefinitionIndex();
-			if ( vecPackBundlesAdded.HasElement( usPackBundleItemDefIndex ) )
-				continue;
-
-			// Remember the def index so we don't add the reference to the pack bundle more than once
-			vecPackBundlesAdded.AddToTail( usPackBundleItemDefIndex );
-
-			// Now, point pBundleItemDef at the pack bundle itself and carry on
-			pBundleItemDef = pPackBundleItemDef;
-		}
-#endif
-
 		// Figure out which display style to use for this item. By default we put one item one each line...
 		EBundleEntryDisplayStyle eDisplayStyle = kBundleDisplay_SingleEntry;
 		
@@ -1685,12 +1667,7 @@ void CEconItemDescription::Generate_Bundle( const CLocalizationProvider *pLocali
 
 		if ( eDisplayStyle == kBundleDisplay_SingleEntry )
 		{
-			// pBundleItemDef will point at the pack bundle if pBundleItemDef is a pack item. In DotA, pack bundles *only* include pack items, whereas in TF, there are bundles which include some items where are individually for sale and others that are not. For example, the Scout Starter Bundle, etc.
-#ifdef DOTA
-			LocalizedAddDescLine( pLocalizationProvider, pBundleItemDef->GetItemBaseName(), ATTRIB_COL_BUNDLE_ITEM, kDescLineFlag_Misc, NULL, pBundleItemDef->GetDefinitionIndex() );
-#else
 			LocalizedAddDescLine( pLocalizationProvider, pBundleItemDef->GetItemBaseName(), pBundleItemDef->IsPackItem() ? ATTRIB_COL_NEUTRAL : ATTRIB_COL_BUNDLE_ITEM, kDescLineFlag_Misc, NULL, pBundleItemDef->IsPackItem() ? INVALID_ITEM_DEF_INDEX : pBundleItemDef->GetDefinitionIndex(), !pBundleItemDef->IsPackItem() );
-#endif
 		}
 		else
 		{
@@ -2667,15 +2644,6 @@ void CEconItemDescription::Generate_ItemSetDesc( const CLocalizationProvider *pL
 				continue;
 
 			item_definition_index_t usLinkItemDefIndex = pOtherSetItem->GetDefinitionIndex();
-
-#ifdef DOTA
-			// If the current item is part of a pack bundle, add the pack bundle to the description, rather than the individual item
-			if ( pOtherSetItem->IsPackItem() )
-			{
-				// Link to the pack bundle, not the individual pack item
-				usLinkItemDefIndex = pOtherSetItem->GetOwningPackBundle()->GetDefinitionIndex();
-			}
-#endif
 
 			// Only used on non-GC in case we have an item misrepresenting itself intentionally for set
 			// grouping purposes. NULL elsewhere.

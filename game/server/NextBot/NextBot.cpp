@@ -12,10 +12,6 @@
 #include "NextBotLocomotionInterface.h"
 #include "NextBotBodyInterface.h"
 
-#ifdef TERROR
-#include "TerrorGamerules.h"
-#endif
-
 #include "vprof.h"
 #include "datacache/imdlcache.h"
 #include "EntityFlame.h"
@@ -424,17 +420,6 @@ void NextBotCombatCharacter::Event_Killed( const CTakeDamageInfo &info )
 	
 	// Advance life state to dying
 	m_lifeState = LIFE_DYING;
-
-#ifdef TERROR
-	/*
-	 * TODO: Make this game-generic
-	 */
-	// Create the death event just like players do.
-	TerrorGameRules()->DeathNoticeForEntity( this, info );
-
-	// Infected specific event
-	TerrorGameRules()->DeathNoticeForInfected( this, info );
-#endif
 
 	if ( GetOwnerEntity() != NULL )
 	{

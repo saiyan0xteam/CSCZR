@@ -16,9 +16,6 @@
 #include "fmtstr.h"
 #include "utlbuffer.h"
 #include "tier0/vprof.h"
-#ifdef TERROR
-#include "func_simpleladder.h"
-#endif
 #include "functorutils.h"
 #include "nav_pathfind.h"
 
@@ -41,7 +38,7 @@
 CNavMesh *TheNavMesh = NULL;
 
 ConVar nav_edit( "nav_edit", "0", FCVAR_GAMEDLL | FCVAR_CHEAT, "Set to one to interactively edit the Navigation Mesh. Set to zero to leave edit mode." );
-ConVar nav_quicksave( "nav_quicksave", "1", FCVAR_GAMEDLL | FCVAR_CHEAT, "Set to one to skip the time consuming phases of the analysis.  Useful for data collection and testing." );	// TERROR: defaulting to 1, since we don't need the other data
+ConVar nav_quicksave( "nav_quicksave", "1", FCVAR_GAMEDLL | FCVAR_CHEAT, "Set to one to skip the time consuming phases of the analysis.  Useful for data collection and testing." );
 ConVar nav_show_approach_points( "nav_show_approach_points", "0", FCVAR_GAMEDLL | FCVAR_CHEAT, "Show Approach Points in the Navigation Mesh." );
 ConVar nav_show_danger( "nav_show_danger", "0", FCVAR_GAMEDLL | FCVAR_CHEAT, "Show current 'danger' levels." );
 ConVar nav_show_player_counts( "nav_show_player_counts", "0", FCVAR_GAMEDLL | FCVAR_CHEAT, "Show current player counts in each area." );
@@ -927,9 +924,6 @@ CNavArea *CNavMesh::GetNearestNavArea( const Vector &pos, bool anyZ, float maxDi
 					Vector areaPos;
 					area->GetClosestPointOnArea( source, &areaPos );
 
-					// TERROR: Using the original pos for distance calculations.  Since it's a pure 3D distance,
-					// with no Z restrictions or LOS checks, this should work for passing in bot foot positions.
-					// This needs to be ported back to CS:S.
 					float distSq = ( areaPos - pos ).LengthSqr();
 
 					// keep the closest area
@@ -1083,39 +1077,6 @@ unsigned int CNavMesh::GetPlace( const Vector &pos ) const
 void CNavMesh::LoadPlaceDatabase( void )
 {
 	m_placeCount = 0;
-
-#ifdef TERROR
-	// TODO: LoadPlaceDatabase happens during the constructor, so we can't override it!
-	// Population.txt holds all the info we need for place names in Left4Dead, so let's not
-	// make Phil edit yet another text file.
-	KeyValues *populationData = new KeyValues( "population" );
-	if ( populationData->LoadFromFile( filesystem, "scripts/population.txt" ) )
-	{
-		CUtlVector< char * > placeNames;
-
-		for ( KeyValues *key = populationData->GetFirstTrueSubKey(); key != NULL; key = key->GetNextTrueSubKey() )
-		{
-			if ( FStrEq( key->GetName(), "default" ) )	// default population is the undefined place
-				continue;
-
-			placeNames.AddToTail( CloneString( key->GetName() ) );
-		}
-
-		m_placeCount = placeNames.Count();
-
-		// allocate place name array
-		m_placeName = new char * [ m_placeCount ];
-		for ( unsigned int i=0; i<m_placeCount; ++i )
-		{
-			m_placeName[i] = placeNames[i];
-		}
-
-		populationData->deleteThis();
-		return;
-	}
-
-	populationData->deleteThis();
-#endif
 
 	CUtlBuffer buf( 0, 0, CUtlBuffer::TEXT_BUFFER );
 	filesystem->ReadFile("NavPlace.db", "GAME", buf);
@@ -2736,26 +2697,6 @@ void CommandNavCompressID( void )
 }
 static ConCommand nav_compress_id( "nav_compress_id", CommandNavCompressID, "Re-orders area and ladder ID's so they are continuous.", FCVAR_GAMEDLL | FCVAR_CHEAT );
 
-
-//--------------------------------------------------------------------------------------------------------------
-#ifdef TERROR
-void CommandNavShowLadderBounds( void )
-{
-	if ( !UTIL_IsCommandIssuedByServerAdmin() )
-		return;
-
-	CFuncSimpleLadder *ladder = NULL;
-	while( (ladder = dynamic_cast< CFuncSimpleLadder * >(gEntList.FindEntityByClassname( ladder, "func_simpleladder" ))) != NULL )
-	{
-		Vector mins, maxs;
-		ladder->CollisionProp()->WorldSpaceSurroundingBounds( &mins, &maxs );
-		ladder->m_debugOverlays |= OVERLAY_TEXT_BIT | OVERLAY_ABSBOX_BIT;
-		NDebugOverlay::Box( vec3_origin, mins, maxs, 0, 255, 0, 0, 600 );
-	}
-}
-static ConCommand nav_show_ladder_bounds( "nav_show_ladder_bounds", CommandNavShowLadderBounds, "Draws the bounding boxes of all func_ladders in the map.", FCVAR_GAMEDLL | FCVAR_CHEAT );
-#endif
-
 //--------------------------------------------------------------------------------------------------------------
 void CommandNavBuildLadder( void )
 {
@@ -2813,10 +2754,6 @@ NavAttributeLookup TheNavAttributeTable[] =
 	{ "NO_MERGE", NAV_MESH_NO_MERGE },
 	{ "OBSTACLE_TOP", NAV_MESH_OBSTACLE_TOP },
 	{ "CLIFF", NAV_MESH_CLIFF },
-#ifdef TERROR
-	{ "PLAYERCLIP", (NavAttributeType)CNavArea::NAV_PLAYERCLIP },
-	{ "BREAKABLEWALL", (NavAttributeType)CNavArea::NAV_BREAKABLEWALL },
-#endif
 	{ NULL, NAV_MESH_INVALID }
 };
 

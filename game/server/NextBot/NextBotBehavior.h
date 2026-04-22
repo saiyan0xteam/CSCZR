@@ -686,23 +686,6 @@ public:
 	virtual EventDesiredResult< Actor > OnWin( Actor *me )														{ return TryContinue(); }
 	virtual EventDesiredResult< Actor > OnLose( Actor *me )														{ return TryContinue(); }
 
-#ifdef DOTA_SERVER_DLL
-	virtual EventDesiredResult< Actor > OnCommandMoveTo( Actor *me, const Vector &pos ) { return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnCommandMoveToAggressive( Actor *me, const Vector &pos ) { return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnCommandAttack( Actor *me, CBaseEntity *victim, bool bDeny ) { return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnCastAbilityNoTarget( Actor *me, CDOTABaseAbility *ability )	{ return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnCastAbilityOnPosition( Actor *me, CDOTABaseAbility *ability, const Vector &pos )	{ return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnCastAbilityOnTarget( Actor *me, CDOTABaseAbility *ability, CBaseEntity *target )	{ return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnDropItem( Actor *me, const Vector &pos, CBaseEntity *item )	{ return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnPickupItem( Actor *me, CBaseEntity *item )	{ return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnPickupRune( Actor *me, CBaseEntity *item )	{ return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnStop( Actor *me )	{ return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnFriendThreatened( Actor *me, CBaseEntity *friendly, CBaseEntity *threat ) 	{ return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnCancelAttack( Actor *me, CBaseEntity *pTarget ) { return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnDominated( Actor *me ) { return TryContinue(); }
-	virtual EventDesiredResult< Actor > OnWarped( Actor *me, Vector vStartPos ) { return TryContinue(); }
-#endif
-
 	/**
 	 * Event handlers must return one of these.
 	 */
@@ -936,23 +919,6 @@ private:
 	virtual void OnTerritoryLost( int territoryID )						{ PROCESS_EVENT_WITH_1_ARG( OnTerritoryLost, territoryID ); }
 	virtual void OnWin( void )											{ PROCESS_EVENT( OnWin ); }
 	virtual void OnLose( void )											{ PROCESS_EVENT( OnLose ); }
-
-#ifdef DOTA_SERVER_DLL
-	virtual void OnCommandMoveTo( const Vector &pos ) { PROCESS_EVENT_WITH_1_ARG( OnCommandMoveTo, pos ); }
-	virtual void OnCommandMoveToAggressive( const Vector &pos ) { PROCESS_EVENT_WITH_1_ARG( OnCommandMoveToAggressive, pos ); }
-	virtual void OnCommandAttack( CBaseEntity *victim, bool bDeny ) { PROCESS_EVENT_WITH_2_ARGS( OnCommandAttack, victim, bDeny ); }
-	virtual void OnCastAbilityNoTarget( CDOTABaseAbility *ability ) { PROCESS_EVENT_WITH_1_ARG( OnCastAbilityNoTarget, ability ); }
-	virtual void OnCastAbilityOnPosition( CDOTABaseAbility *ability, const Vector &pos ) { PROCESS_EVENT_WITH_2_ARGS( OnCastAbilityOnPosition, ability, pos ); }
-	virtual void OnCastAbilityOnTarget( CDOTABaseAbility *ability, CBaseEntity *target ) { PROCESS_EVENT_WITH_2_ARGS( OnCastAbilityOnTarget, ability, target ); }
-	virtual void OnDropItem( const Vector &pos, CBaseEntity *item ) { PROCESS_EVENT_WITH_2_ARGS( OnDropItem, pos, item ); }
-	virtual void OnPickupItem( CBaseEntity *item ) { PROCESS_EVENT_WITH_1_ARG( OnPickupItem, item ); }
-	virtual void OnPickupRune( CBaseEntity *item ) { PROCESS_EVENT_WITH_1_ARG( OnPickupRune, item ); }
-	virtual void OnStop() { PROCESS_EVENT( OnStop ); }
-	virtual void OnFriendThreatened( CBaseEntity *friendly, CBaseEntity *threat ) { PROCESS_EVENT_WITH_2_ARGS( OnFriendThreatened, friendly, threat ); }
-	virtual void OnCancelAttack( CBaseEntity *pTarget ) { PROCESS_EVENT_WITH_1_ARG( OnCancelAttack, pTarget ); }
-	virtual void OnDominated() { PROCESS_EVENT( OnDominated ); }
-	virtual void OnWarped( Vector vStartPos ) { PROCESS_EVENT_WITH_1_ARG( OnWarped, vStartPos ); }
-#endif
 
 	friend class Behavior< Actor>;							// the containing Behavior class
 	Behavior< Actor > *m_behavior;							// the Behavior this Action is part of

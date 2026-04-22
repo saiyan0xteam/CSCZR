@@ -7,12 +7,6 @@
 #include "NextBotManager.h"
 #include "NextBotInterface.h"
 
-#ifdef TERROR
-#include "ZombieBot/Infected/Infected.h"
-#include "ZombieBot/Witch/Witch.h"
-#include "ZombieManager.h"
-#endif
-
 #include "SharedFunctorUtils.h"
 //#include "../../common/blackbox_helper.h"
 

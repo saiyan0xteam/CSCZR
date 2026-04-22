@@ -19,11 +19,6 @@
 #include "tier2/tier2.h"
 #include "tier2/p4helpers.h"
 #include "tier2/fileutils.h"
-
-#ifdef TERROR
-#include "func_elevator.h"
-#endif
-
 #include "tier1/lzmaDecoder.h"
 
 #ifdef CSTRIKE_DLL
@@ -1712,8 +1707,6 @@ NavErrorType CNavMesh::PostLoad( unsigned int version )
 
 	ValidateNavAreaConnections();
 
-	// TERROR: loading into a map directly creates entities before the mesh is loaded.  Tell the preexisting
-	// entities now that the mesh is loaded so they can update areas.
 	for ( int i=0; i<m_avoidanceObstacles.Count(); ++i )
 	{
 		m_avoidanceObstacles[i]->OnNavMeshLoaded();

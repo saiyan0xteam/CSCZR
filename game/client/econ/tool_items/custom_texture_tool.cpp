@@ -2462,7 +2462,6 @@ void CConfirmCustomizeTextureDialog::TestFilters()
 		"d:/custom_images/borat.jpg",
 		"d:/custom_images/cloud_strife-profile.jpg",
 		"d:/custom_images/ladies_man.png",
-		"d:/custom_images/dota_hero.jpg",
 		"d:/custom_images/elmo balls.jpg",
 		"d:/custom_images/halolz-dot-com-teamfortress2-sexyheavy-prematureubers.jpg",
 		"d:/custom_images/doug_loves_movies.jpg",

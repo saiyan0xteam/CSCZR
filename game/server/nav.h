@@ -31,7 +31,6 @@ const float JumpCrouchHeight = 64.0f;			// (48) if delta Z is less than or equal
 // There are 3 different definitions of StepHeight throughout the code, waiting to produce bugs if the 18.0 is ever changed.
 const float StepHeight = 18.0f;					// if delta Z is greater than this, we have to jump to get up
 
-// TERROR: Increased DeathDrop from 200, since zombies don't take falling damage
 #if defined(CSTRIKE_DLL)
 const float DeathDrop = 200.0f;					// (300) distance at which we will die if we fall - should be about 600, and pay attention to fall damage during pathfind
 #else
@@ -46,7 +45,6 @@ const float ClimbUpHeight = 200.0f;				// height to check for climbing up
 
 const float CliffHeight = 300.0f;				// height which we consider a significant cliff which we would not want to fall off of
 
-// TERROR: Converted these values to use the same numbers as the player bounding boxes etc
 #define HalfHumanWidth			16
 #define HalfHumanHeight			35.5
 #define HumanHeight				71

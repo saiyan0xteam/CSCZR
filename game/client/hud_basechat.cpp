@@ -1205,7 +1205,6 @@ void CBaseHudChat::StartMessageMode( int iMessageModeType )
 	
 	if ( GetChatHistory() )
 	{
-		// TERROR: hack to get ChatFont back
 		GetChatHistory()->SetFont( vgui::scheme()->GetIScheme( GetScheme() )->GetFont( "ChatFont", true ) );
 		GetChatHistory()->SetMouseInputEnabled( true );
 		GetChatHistory()->SetKeyBoardInputEnabled( false );

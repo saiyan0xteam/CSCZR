@@ -77,10 +77,7 @@ CSimpleBot::~CSimpleBot()
 void CSimpleBot::Precache()
 {
 	BaseClass::Precache();
-
-#ifndef DOTA_DLL
 	PrecacheModel( "models/humans/group01/female_01.mdl" );
-#endif
 }
 
 
@@ -88,10 +85,7 @@ void CSimpleBot::Precache()
 void CSimpleBot::Spawn( void )
 {
 	BaseClass::Spawn();
-
-#ifndef DOTA_DLL
 	SetModel( "models/humans/group01/female_01.mdl" );
-#endif
 }
 
 

@@ -1057,11 +1057,7 @@ int CEconItemView::GetAnimationSlot( void ) const
 	if ( !GetStaticData() )
 		return -1;
 
-#if defined( CSTRIKE_DLL ) || defined( DOTA_DLL )
 	return -1;
-#else
-	return GetStaticData()->GetAnimSlot();
-#endif
 }
 
 //-----------------------------------------------------------------------------

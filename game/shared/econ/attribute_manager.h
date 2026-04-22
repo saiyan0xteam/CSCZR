@@ -264,7 +264,6 @@ private:
 // Purpose: An attribute manager that uses a player's shared attributes.
 //-----------------------------------------------------------------------------
 
-#ifndef DOTA_DLL
 class CAttributeContainerPlayer : public CAttributeManager
 {
 public:
@@ -288,7 +287,6 @@ public:
 private:
 	CNetworkHandle( CBasePlayer, m_hPlayer );
 };
-#endif
 
 class CEconGetAttributeIterator : public CEconItemSpecificAttributeIterator
 {

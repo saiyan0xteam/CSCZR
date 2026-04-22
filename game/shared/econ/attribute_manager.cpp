@@ -32,10 +32,8 @@ BEGIN_DATADESC( CAttributeContainer )
 	DEFINE_EMBEDDED( m_Item ),
 END_DATADESC()
 
-#ifndef DOTA_DLL
 BEGIN_DATADESC( CAttributeContainerPlayer )
 END_DATADESC()
-#endif
 
 #ifndef CLIENT_DLL
 EXTERN_SEND_TABLE( DT_ScriptCreatedItem );
@@ -69,7 +67,6 @@ BEGIN_NETWORK_TABLE_NOBASE( CAttributeContainer, DT_AttributeContainer )
 #endif
 END_NETWORK_TABLE()
 
-#ifndef DOTA_DLL
 BEGIN_NETWORK_TABLE_NOBASE( CAttributeContainerPlayer, DT_AttributeContainerPlayer )
 #ifndef CLIENT_DLL
 	SendPropEHandle( SENDINFO(m_hOuter) ),
@@ -83,7 +80,6 @@ BEGIN_NETWORK_TABLE_NOBASE( CAttributeContainerPlayer, DT_AttributeContainerPlay
 	RecvPropEHandle( RECVINFO( m_hPlayer ) ),
 #endif
 END_NETWORK_TABLE()
-#endif
 
 template< class T > T AttributeConvertFromFloat( float flValue )
 {
@@ -736,7 +732,6 @@ float CAttributeContainer::ApplyAttributeFloat( float flValue, CBaseEntity *pIni
 	return BaseClass::ApplyAttributeFloat( it.GetResultValue(), pInitiator, iszAttribHook, pItemList );
 }
 
-#ifndef DOTA_DLL
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -759,10 +754,6 @@ float CAttributeContainerPlayer::ApplyAttributeFloat( float flValue, CBaseEntity
 
 	return BaseClass::ApplyAttributeFloat( it.GetResultValue(), pInitiator, iszAttribHook, pItemList );
 }
-
-
-#endif
-
 
 //-----------------------------------------------------------------------------
 // Purpose:

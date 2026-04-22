@@ -81,7 +81,6 @@ END_SCRIPTDESC();
 //-----------------------------------------------------------------------------
 void DrawEconEntityAttachedModels( CBaseAnimating *pEnt, CEconEntity *pAttachedModelSource, const ClientModelRenderInfo_t *pInfo, int iMatchDisplayFlags )
 {
-#ifndef DOTA_DLL
 	if ( !pEnt || !pAttachedModelSource || !pInfo )
 		return;
 
@@ -123,7 +122,6 @@ void DrawEconEntityAttachedModels( CBaseAnimating *pEnt, CEconEntity *pAttachedM
 
 	if ( pMaterialOverride != NULL )
 		modelrender->ForcedMaterialOverride( pMaterialOverride, nMaterialOverrideType );
-#endif
 }
 #endif // CLIENT_DLL
 
@@ -423,9 +421,6 @@ void CEconEntity::GetToolRecordingState( KeyValues *msg )
 #endif
 }
 
-
-#ifndef DOTA_DLL
-
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -527,8 +522,6 @@ int C_ViewmodelAttachmentModel::GetSkin( void )
 
 	return BaseClass::GetSkin();
 }
-
-#endif // !defined( DOTA_DLL )
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -654,7 +647,6 @@ void CEconEntity::OnDataChanged( DataUpdateType_t updateType )
 //-----------------------------------------------------------------------------
 void CEconEntity::UpdateAttachmentModels( void )
 {
-#ifndef DOTA_DLL
 	CEconItemView *pItem = GetAttributeContainer()->GetItem();
 	GameItemDefinition_t *pItemDef = pItem && pItem->IsValid() ? pItem->GetStaticData() : NULL;
 
@@ -775,8 +767,6 @@ void CEconEntity::UpdateAttachmentModels( void )
 	{
 		m_hViewmodelAttachment->Release();
 	}
-
-#endif // !defined( DOTA_DLL )
 }
 
 //-----------------------------------------------------------------------------
@@ -1382,7 +1372,6 @@ bool CEconEntity::IsOverridingViewmodel( void )
 int	CEconEntity::DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags )
 {
 	int ret = 0;
-#ifndef DOTA_DLL
 	bool bIsAttachmentTranslucent = m_hViewmodelAttachment.Get() ? m_hViewmodelAttachment->IsTransparent() : false;
 	bool bUseOverride = false;
 	
@@ -1435,7 +1424,6 @@ int	CEconEntity::DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags
 	{
 		modelrender->ForcedMaterialOverride( NULL );
 	}
-#endif // !defined( DOTA_DLL )
 	return ret;
 }
 

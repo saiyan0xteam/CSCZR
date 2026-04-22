@@ -71,12 +71,6 @@ public:
 		if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
 		{
 			CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
-#ifdef TERROR
-			CBasePlayer *player = ToBasePlayer( entity );
-			if ( player && player->IsGhost() )
-				return false;
-#endif // TERROR
-
 			return ( entity->MyNextBotPointer() == NULL );
 		}
 		return false;
@@ -103,11 +97,6 @@ public:
 		if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
 		{
 			CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
-#ifdef TERROR
-			CBasePlayer *player = ToBasePlayer( entity );
-			if ( player && player->IsGhost() )
-				return false;
-#endif // TERROR
 
 			// Skip players on the same team - they're not solid to us, and we'll avoid them
 			if ( entity->IsPlayer() && m_passBot && m_passBot->GetEntity() &&
@@ -147,12 +136,6 @@ public:
 		if ( CTraceFilterSimple::ShouldHitEntity( pServerEntity, contentsMask ) )
 		{
 			CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
-
-#ifdef TERROR
-			CBasePlayer *player = ToBasePlayer( entity );
-			if ( player && player->IsGhost() )
-				return false;
-#endif // TERROR
 
 			return ( entity->MyNextBotPointer() || entity->IsPlayer() );
 		}
@@ -249,12 +232,6 @@ public:
 	virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
 	{
 		CBaseEntity *entity = EntityFromEntityHandle( pServerEntity );
-
-#ifdef TERROR
-		CBasePlayer *player = ToBasePlayer( entity );
-		if ( player && player->IsGhost() )
-			return false;
-#endif // TERROR
 
 		if ( m_bot->IsSelf( entity ) )
 		{

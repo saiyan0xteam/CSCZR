@@ -489,14 +489,6 @@ bool PathFollower::CheckProgress( INextBot *bot )
 					break;
 				}
 
-#ifdef DOTA_DLL
-				if ( DotProduct( mover->GetMotionVector(), nextSegment->forward ) <= 0.1f )
-				{
-					// don't skip sharp turns
-					break;
-				}
-#endif
-
 				// can we reach the next path segment directly
 				if ( mover->IsPotentiallyTraversable( myFeet, nextSegment->pos ) && !mover->HasPotentialGap( myFeet, nextSegment->pos ) )
 				{

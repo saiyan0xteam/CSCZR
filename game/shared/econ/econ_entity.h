@@ -214,7 +214,6 @@ public:
 };
 
 #if defined( CLIENT_DLL )
-#ifndef DOTA_DLL
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -239,7 +238,6 @@ private:
 	CHandle<CEconEntity>  m_hOuter;
 	bool							m_bAlwaysFlip;
 };
-#endif // !defined( DOTA_DLL )
 #endif // defined( CLIENT_DLL )
 
 #endif // ECON_ENTITY_H

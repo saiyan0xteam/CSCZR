@@ -718,20 +718,6 @@ inline void NextBotPlayer< PlayerType >::PhysicsSimulate( void )
 
 	QAngle angles = this->EyeAngles();
 
-#ifdef TERROR
-	if ( IsStunned() )
-	{
-		inputButtons &= ~(IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT | IN_JUMP | IN_DUCK );
-	}
-
-	// "Look" in the direction we're climbing/stumbling etc.  We can't do anything anyway, and it
-	// keeps motion extraction working.
-	if ( IsRenderYawOverridden() && IsMotionControlledXY( GetMainActivity() ) )
-	{
-		angles[YAW] = GetOverriddenRenderYaw();
-	}
-#endif
-
 	// construct a "command" to move the player
 	CUserCmd userCmd;
 	_NextBot_BuildUserCommand( &userCmd, angles, forwardSpeed, strafeSpeed, verticalSpeed, inputButtons, 0 );
@@ -779,13 +765,7 @@ inline void NextBotPlayer< PlayerType >::Touch( CBaseEntity *other )
 template < typename PlayerType >
 inline void NextBotPlayer< PlayerType >::Weapon_Equip( CBaseCombatWeapon *weapon )
 {
-#ifdef TERROR
-	// TODO: Reimplement GetDroppingPlayer() into GetLastOwner()
-	OnPickUp( weapon, weapon->GetDroppingPlayer() );
-#else
 	OnPickUp( weapon, NULL );
-#endif
-
 	BaseClass::Weapon_Equip( weapon );
 }
 
@@ -804,9 +784,6 @@ inline void NextBotPlayer< PlayerType >::Weapon_Drop( CBaseCombatWeapon *weapon,
 template < typename PlayerType >
 inline void NextBotPlayer< PlayerType >::OnMainActivityComplete( Activity newActivity, Activity oldActivity )
 {
-#ifdef TERROR
-	BaseClass::OnMainActivityComplete( newActivity, oldActivity );
-#endif
 	OnAnimationActivityComplete( oldActivity );
 }
 
@@ -815,9 +792,6 @@ inline void NextBotPlayer< PlayerType >::OnMainActivityComplete( Activity newAct
 template < typename PlayerType >
 inline void NextBotPlayer< PlayerType >::OnMainActivityInterrupted( Activity newActivity, Activity oldActivity )
 {
-#ifdef TERROR
-	BaseClass::OnMainActivityInterrupted( newActivity, oldActivity );
-#endif
 	OnAnimationActivityInterrupted( oldActivity );
 }
 

@@ -5357,55 +5357,11 @@ bool CEconItemSchema::BInitItems( KeyValues *pKVItems, CUtlVector<CUtlString> *p
 		// Link up armory and store mappings for the item
 		SCHEMA_INIT_SUBSTEP( pItemDef->BInitItemMappings( pVecErrors ) );
 	}
-
-#ifdef DOTA
-	// Go through all regular (ie non-pack) bundles and ensure that if any pack items are included, *all* pack items in the owning pack bundle are included
-	FOR_EACH_VEC( m_vecBundles, iBundle )
-	{
-		const CEconItemDefinition *pBundleItemDef = m_vecBundles[ iBundle ];
-		if ( pBundleItemDef->IsPackBundle() )
-			continue;
-
-		// Go through all items in the bundle and look for pack items
-		const bundleinfo_t *pBundle = pBundleItemDef->GetBundleInfo();
-		if ( pBundle )
-		{
-			FOR_EACH_VEC( pBundle->vecItemDefs, iContainedBundleItem )
-			{
-				// Get the associated pack bundle
-				const CEconItemDefinition *pContainedBundleItemDef = pBundle->vecItemDefs[ iContainedBundleItem ];
-
-				// Ignore non-pack items
-				if ( !pContainedBundleItemDef || !pContainedBundleItemDef->IsPackItem() )
-					continue;
-
-				// Get the pack bundle that contains this particular pack item
-				const CEconItemDefinition *pOwningPackBundleItemDef = pContainedBundleItemDef->GetOwningPackBundle();
-
-				// Make sure all items in the owning pack bundle are in pBundleItemDef's bundle info (pBundle)
-				const bundleinfo_t *pOwningPackBundle = pOwningPackBundleItemDef->GetBundleInfo();
-				FOR_EACH_VEC( pOwningPackBundle->vecItemDefs, iCurPackBundleItem )
-				{
-					CEconItemDefinition *pCurPackBundleItem = pOwningPackBundle->vecItemDefs[ iCurPackBundleItem ];
-					if ( !pBundle->vecItemDefs.HasElement( pCurPackBundleItem ) )
-					{
-						SCHEMA_INIT_CHECK(
-							false,
-							"The bundle \"%s\" contains some, but not all pack items required specified by pack bundle \"%s.\"",
-							pBundleItemDef->GetDefinitionName(),
-							pOwningPackBundleItemDef->GetDefinitionName()
-					   );
-					}
-				}
-			}
-		}
-	}
-#endif
-
+	
 	return SCHEMA_INIT_SUCCESS();
 }
 
-#if 0 // Compiled out until some DotA changes from the item editor are brought over
+#if 0 
 //-----------------------------------------------------------------------------
 // Purpose:	Delete an item definition. Moderately dangerous as cached references will become bad.
 // Intended for use by the item editor.

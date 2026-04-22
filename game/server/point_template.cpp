@@ -611,19 +611,6 @@ bool CPointScriptTemplate::CreateInstance( const Vector &vecOrigin, const QAngle
 
 	HierarchicalSpawn_t *pSpawnList = (HierarchicalSpawn_t*)stackalloc( iTemplates * sizeof(HierarchicalSpawn_t) );
 
-#ifdef TERROR
-	// Need to fix up the names
-	CScriptScope *pScriptScope = TheDirector->GetScriptScope( TheDirector->GetChallengeMode()->GetScriptedModeLevel() );
-	if ( pScriptScope )
-	{
-		HSCRIPT hInstanceFunc = pScriptScope->LookupFunction( "InstanceTemplateSpawnTables" );
-		if ( hInstanceFunc )
-		{
-			pScriptScope->Call( hInstanceFunc, NULL, m_hTemplateSpawnTable, m_hGroupSpawnTables, AllowNameFixup() );
-		}
-	}
-#endif
-
 	for ( int i = 0; i < iTemplates; i++ )
 	{
 		// Create the entity from the spawn table

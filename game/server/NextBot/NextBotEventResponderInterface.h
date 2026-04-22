@@ -9,7 +9,6 @@
 class Path;
 class CTakeDamageInfo;
 class CBaseEntity;
-class CDOTABaseAbility;
 
 struct CSoundParameters;
 struct animevent_t;
@@ -101,23 +100,6 @@ public:
 
 	virtual void OnWin( void );
 	virtual void OnLose( void );
-
-#ifdef DOTA_SERVER_DLL
-	virtual void OnCommandMoveTo( const Vector &pos );
-	virtual void OnCommandMoveToAggressive( const Vector &pos );
-	virtual void OnCommandAttack( CBaseEntity *victim, bool bDeny );
-	virtual void OnCastAbilityNoTarget( CDOTABaseAbility *ability );
-	virtual void OnCastAbilityOnPosition( CDOTABaseAbility *ability, const Vector &pos );
-	virtual void OnCastAbilityOnTarget( CDOTABaseAbility *ability, CBaseEntity *target );
-	virtual void OnDropItem( const Vector &pos, CBaseEntity *item );
-	virtual void OnPickupItem( CBaseEntity *item );
-	virtual void OnPickupRune( CBaseEntity *item );
-	virtual void OnStop();
-	virtual void OnFriendThreatened( CBaseEntity *friendly, CBaseEntity *threat );
-	virtual void OnCancelAttack( CBaseEntity *pTarget );
-	virtual void OnDominated();
-	virtual void OnWarped( Vector vStartPos );
-#endif
 };
 
 
@@ -432,119 +414,5 @@ inline void INextBotEventResponder::OnLose( void )
 		sub->OnLose();
 	}	
 }
-
-#ifdef DOTA_SERVER_DLL
-inline void INextBotEventResponder::OnCommandMoveTo( const Vector &pos )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnCommandMoveTo( pos );
-	}
-}
-
-inline void INextBotEventResponder::OnCommandMoveToAggressive( const Vector &pos )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnCommandMoveToAggressive( pos );
-	}
-}
-
-inline void INextBotEventResponder::OnCommandAttack( CBaseEntity *victim, bool bDeny )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnCommandAttack( victim, bDeny );
-	}	
-}
-
-inline void INextBotEventResponder::OnCastAbilityNoTarget( CDOTABaseAbility *ability )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnCastAbilityNoTarget( ability );
-	}	
-}
-
-inline void INextBotEventResponder::OnCastAbilityOnPosition( CDOTABaseAbility *ability, const Vector &pos )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnCastAbilityOnPosition( ability, pos );
-	}	
-}
-
-inline void INextBotEventResponder::OnCastAbilityOnTarget( CDOTABaseAbility *ability, CBaseEntity *target )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnCastAbilityOnTarget( ability, target );
-	}	
-}
-
-inline void INextBotEventResponder::OnDropItem( const Vector &pos, CBaseEntity *item )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnDropItem( pos, item );
-	}	
-}
-
-inline void INextBotEventResponder::OnPickupItem( CBaseEntity *item )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnPickupItem( item );
-	}	
-}
-
-inline void INextBotEventResponder::OnPickupRune( CBaseEntity *item )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnPickupRune( item );
-	}	
-}
-
-inline void INextBotEventResponder::OnStop()
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnStop();
-	}	
-}
-
-inline void INextBotEventResponder::OnFriendThreatened( CBaseEntity *friendly, CBaseEntity *threat )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnFriendThreatened( friendly, threat );
-	}	
-}
-
-inline void INextBotEventResponder::OnCancelAttack( CBaseEntity *pTarget )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnCancelAttack( pTarget );
-	}	
-}
-
-inline void INextBotEventResponder::OnDominated()
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnDominated();
-	}	
-}
-
-inline void INextBotEventResponder::OnWarped( Vector vStartPos )
-{
-	for ( INextBotEventResponder *sub = FirstContainedResponder(); sub; sub = NextContainedResponder( sub ) )
-	{
-		sub->OnWarped( vStartPos );
-	}	
-}
-#endif
 
 #endif // _NEXT_BOT_EVENT_RESPONDER_INTERFACE_H_

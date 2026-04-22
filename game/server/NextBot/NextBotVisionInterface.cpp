@@ -13,10 +13,6 @@
 #include "NextBotBodyInterface.h"
 #include "NextBotUtil.h"
 
-#ifdef TERROR
-#include "querycache.h"
-#endif
-
 #include "tier0/vprof.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -710,42 +706,6 @@ bool IVision::IsLineOfSightClear( const Vector &pos ) const
 //------------------------------------------------------------------------------------------
 bool IVision::IsLineOfSightClearToEntity( const CBaseEntity *subject, Vector *visibleSpot ) const
 {
-#ifdef TERROR
-	// TODO: Integration querycache & its dependencies
-
-	VPROF_INCREMENT_COUNTER( "IVision::IsLineOfSightClearToEntity", 1 );
-	VPROF_BUDGET( "IVision::IsLineOfSightClearToEntity", "NextBotSpiky" );
-
-	bool bClear = IsLineOfSightBetweenTwoEntitiesClear( GetBot()->GetBodyInterface()->GetEntity(), EOFFSET_MODE_EYEPOSITION,
-														subject, EOFFSET_MODE_WORLDSPACE_CENTER,
-														subject, COLLISION_GROUP_NONE,
-														MASK_BLOCKLOS_AND_NPCS|CONTENTS_IGNORE_NODRAW_OPAQUE, VisionTraceFilterFunction, 1.0 );
-
-#ifdef USE_NON_CACHE_QUERY
-	trace_t result;
-	NextBotTraceFilterIgnoreActors filter( subject, COLLISION_GROUP_NONE );
-	
-	UTIL_TraceLine( GetBot()->GetBodyInterface()->GetEyePosition(), subject->WorldSpaceCenter(), MASK_BLOCKLOS_AND_NPCS|CONTENTS_IGNORE_NODRAW_OPAQUE, &filter, &result );
-	Assert( result.DidHit() != bClear );
-	if ( subject->IsPlayer() && ! bClear )
-	{
-		UTIL_TraceLine( GetBot()->GetBodyInterface()->GetEyePosition(), subject->EyePosition(), MASK_BLOCKLOS_AND_NPCS|CONTENTS_IGNORE_NODRAW_OPAQUE, &filter, &result );
-		bClear = IsLineOfSightBetweenTwoEntitiesClear( GetBot()->GetEntity(),
-													   EOFFSET_MODE_EYEPOSITION,
-													   subject, EOFFSET_MODE_EYEPOSITION,
-													   subject, COLLISION_GROUP_NONE,
-													   MASK_BLOCKLOS_AND_NPCS|CONTENTS_IGNORE_NODRAW_OPAQUE, 
-													   IgnoreActorsTraceFilterFunction, 1.0 );
-
-		// this WILL assert - the query interface happens at a different time, and has hysteresis.
-		Assert( result.DidHit() != bClear );
-	}
-#endif
-
-	return bClear;
-
-#else
-
 	// TODO: Use plain-old traces until querycache/etc gets integrated
 	VPROF_BUDGET( "IVision::IsLineOfSightClearToEntity", "NextBot" );
 
@@ -769,8 +729,6 @@ bool IVision::IsLineOfSightClearToEntity( const CBaseEntity *subject, Vector *vi
 	}
 
 	return ( result.fraction >= 1.0f && !result.startsolid );
-
-#endif
 }
 
 
